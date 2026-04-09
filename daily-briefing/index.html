@@ -175,19 +175,27 @@ function esc(s) {
     .replace(/"/g,'&quot;').replace(/\n/g,'<br>');
 }
 
+function mdToHtml(s) {
+  if (!s) return '';
+  return String(s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/^#{3}\s+(.+)$/gm, '<h4 style="font-family:\'Noto Serif SC\',serif;font-size:14px;font-weight:700;margin:14px 0 6px;color:var(--dark)">$1</h4>')
+    .replace(/^#{2}\s+(.+)$/gm, '<h3 style="font-family:\'Noto Serif SC\',serif;font-size:15px;font-weight:700;margin:18px 0 8px;color:var(--dark);border-bottom:1px solid var(--border);padding-bottom:4px">$1</h3>')
+    .replace(/^#{1}\s+(.+)$/gm, '<h2 style="font-family:\'Noto Serif SC\',serif;font-size:17px;font-weight:700;margin:20px 0 10px;color:var(--dark)">$1</h2>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/`([^`]+)`/g, '<code style="background:#f3f4f6;padding:1px 4px;border-radius:3px;font-size:12px;font-family:monospace">$1</code>')
+    .replace(/^- (.+)$/gm, '<li style="margin:3px 0;padding-left:4px">$1</li>')
+    .replace(/^(\d+)\. (.+)$/gm, '<li style="margin:3px 0;padding-left:4px"><span style="color:var(--red);font-weight:600">$1.</span> $2</li>')
+    .replace(/^> (.+)$/gm, '<blockquote style="border-left:3px solid var(--border);padding:6px 12px;color:var(--mid);margin:8px 0">$1</blockquote>')
+    .replace(/^---+$/gm, '<hr style="border:none;border-top:1px solid var(--border);margin:14px 0">')
+    .replace(/\n\n/g, '</p><p style="margin:8px 0">')
+    .replace(/\n/g, '<br>');
+}
+
 function renderDigest(d) {
   if (!d) return '<div class="error">今日昨日日报数据缺失</div>';
-  let h = '';
-  if (d.keywords || d.cognition || d.decisions || d.todo) {
-    h += '<div class="meta-grid">';
-    if (d.keywords) h += `<div class="meta-item"><div class="meta-label">关键词</div><div class="meta-value">${esc(d.keywords)}</div></div>`;
-    if (d.cognition) h += `<div class="meta-item"><div class="meta-label">认知升级</div><div class="meta-value">${esc(d.cognition)}</div></div>`;
-    if (d.decisions) h += `<div class="meta-item"><div class="meta-label">核心决策</div><div class="meta-value">${esc(d.decisions)}</div></div>`;
-    if (d.todo) h += `<div class="meta-item"><div class="meta-label">T+0 待办</div><div class="meta-value">${esc(d.todo)}</div></div>`;
-    h += '</div>';
-  }
-  if (d.full) h += `<div class="full-text">${esc(d.full)}</div>`;
-  return h || '<div class="error">速览数据为空</div>';
+  if (d.full) return `<div class="full-text">${mdToHtml(d.full)}</div>`;
+  return '<div class="error">日报数据为空</div>';
 }
 
 function renderPatrol(d) {
