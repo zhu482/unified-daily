@@ -8,177 +8,86 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --red: #dc2626;
-  --dark: #1a1a1a;
-  --mid: #555;
-  --light: #888;
-  --bg: #f5f5f5;
-  --card: #fff;
-  --border: #e8e8e8;
-  --orange: #f97316;
-  --green: #16a34a;
-  --blue: #2563eb;
+  --red: #dc2626; --dark: #1a1a1a; --mid: #555; --light: #888;
+  --bg: #f2f2f2; --card: #fff; --border: #e5e5e5;
+  --orange: #f97316; --green: #16a34a; --blue: #2563eb;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  background: var(--bg);
-  color: var(--dark);
-  font-family: 'Noto Sans SC', system-ui, sans-serif;
-  font-size: 15px;
-  line-height: 1.7;
-  padding-bottom: 40px;
-}
+body { background: var(--bg); color: var(--dark); font-family: 'Noto Sans SC', system-ui, sans-serif; font-size: 15px; line-height: 1.7; padding-bottom: 48px; }
 body::before { content: ''; display: block; height: 4px; background: var(--red); }
 
 /* Header */
-.hdr {
-  background: var(--card);
-  border-bottom: 1px solid var(--border);
-  padding: 16px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-}
+.hdr { background: var(--card); border-bottom: 1px solid var(--border); padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; }
 .hdr h1 { font-family: 'Noto Serif SC', serif; font-size: 18px; font-weight: 700; }
 .hdr h1 span { color: var(--red); }
-.hdr .date { font-size: 13px; color: var(--mid); white-space: nowrap; }
+.hdr .date { font-size: 13px; color: var(--mid); }
 
 /* Tabs */
-.tabs {
-  background: var(--card);
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  position: sticky; top: 0; z-index: 10;
-  overflow-x: auto; -webkit-overflow-scrolling: touch;
-}
+.tabs { background: var(--card); border-bottom: 1px solid var(--border); display: flex; position: sticky; top: 0; z-index: 20; overflow-x: auto; }
 .tabs::-webkit-scrollbar { display: none; }
-.tab {
-  padding: 12px 20px;
-  font-size: 14px; font-weight: 500;
-  color: var(--mid); cursor: pointer;
-  border-bottom: 2px solid transparent;
-  white-space: nowrap; flex-shrink: 0;
-  border-top: none; border-left: none; border-right: none;
-  background: none; font-family: inherit;
-  transition: color .15s;
-}
+.tab { padding: 11px 20px; font-size: 14px; font-weight: 500; color: var(--mid); cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; flex-shrink: 0; background: none; border-top: none; border-left: none; border-right: none; font-family: inherit; transition: color .15s; }
 .tab:hover { color: var(--dark); }
 .tab.active { color: var(--red); border-bottom-color: var(--red); font-weight: 600; }
 
 .tab-panel { display: none; }
 .tab-panel.active { display: block; }
 
-.main { max-width: 680px; margin: 0 auto; padding: 16px; }
+/* Subnav — 锚点跳转条 */
+.subnav { background: var(--card); border-bottom: 1px solid var(--border); padding: 0 16px; display: flex; gap: 0; overflow-x: auto; position: sticky; top: 44px; z-index: 10; }
+.subnav::-webkit-scrollbar { display: none; }
+.subnav a { padding: 8px 12px; font-size: 12px; color: var(--mid); white-space: nowrap; text-decoration: none; border-bottom: 2px solid transparent; flex-shrink: 0; }
+.subnav a:hover { color: var(--dark); }
+.subnav a.active { color: var(--red); border-bottom-color: var(--red); font-weight: 600; }
 
-/* Block — 每个信息块 */
-.block {
-  background: var(--card);
-  border-radius: 10px;
-  padding: 16px;
-  margin-bottom: 10px;
-}
-.block-label {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
-  margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.block-label.red   { color: var(--red); }
-.block-label.orange{ color: var(--orange); }
-.block-label.green { color: var(--green); }
-.block-label.blue  { color: var(--blue); }
-.block-label.gray  { color: var(--light); }
+.main { max-width: 680px; margin: 0 auto; padding: 14px 16px; }
 
-/* 关键词 pills */
+/* Block */
+.block { background: var(--card); border-radius: 10px; padding: 16px; margin-bottom: 10px; scroll-margin-top: 100px; }
+.block-label { font-size: 11px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 10px; }
+.block-label.red    { color: var(--red); }
+.block-label.orange { color: var(--orange); }
+.block-label.green  { color: var(--green); }
+.block-label.blue   { color: var(--blue); }
+.block-label.gray   { color: var(--light); }
+
+/* Pills */
 .pills { display: flex; flex-wrap: wrap; gap: 6px; }
-.pill {
-  background: #f3f4f6;
-  color: var(--dark);
-  font-size: 13px;
-  padding: 4px 10px;
-  border-radius: 20px;
-  line-height: 1.4;
-}
+.pill { background: #f3f4f6; color: var(--dark); font-size: 13px; padding: 4px 10px; border-radius: 20px; }
 
-/* 高亮框 */
-.highlight {
-  background: #fff7ed;
-  border-left: 3px solid var(--orange);
-  border-radius: 0 8px 8px 0;
-  padding: 12px 14px;
-  font-size: 15px;
-  font-weight: 500;
-  color: #9a3412;
-  line-height: 1.65;
-}
-.highlight.green {
-  background: #f0fdf4;
-  border-color: var(--green);
-  color: #14532d;
-}
-.highlight.red {
-  background: #fef2f2;
-  border-color: var(--red);
-  color: #7f1d1d;
-}
+/* Highlight box */
+.hl { border-left: 3px solid var(--orange); border-radius: 0 8px 8px 0; padding: 12px 14px; font-size: 15px; font-weight: 500; color: #9a3412; background: #fff7ed; line-height: 1.65; }
+.hl.green  { border-color: var(--green); color: #14532d; background: #f0fdf4; }
+.hl.red    { border-color: var(--red); color: #7f1d1d; background: #fef2f2; }
+.hl.blue   { border-color: var(--blue); color: #1e3a8a; background: #eff6ff; }
 
-/* 列表 */
-.item-list { list-style: none; }
-.item-list li {
-  padding: 7px 0;
-  border-bottom: 1px solid var(--border);
-  font-size: 14px;
-  color: var(--dark);
-  line-height: 1.6;
-  display: flex;
-  gap: 8px;
-}
-.item-list li:last-child { border-bottom: none; }
-.item-list li::before {
-  content: attr(data-n);
-  color: var(--red);
-  font-weight: 600;
-  font-size: 13px;
-  flex-shrink: 0;
-  min-width: 18px;
-}
+/* List */
+.list { list-style: none; }
+.list li { padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 14px; display: flex; gap: 8px; align-items: flex-start; line-height: 1.6; }
+.list li:last-child { border-bottom: none; padding-bottom: 0; }
+.list li .num { color: var(--red); font-weight: 600; font-size: 13px; flex-shrink: 0; min-width: 18px; }
 
-/* 普通文字块 */
-.text-block {
-  font-size: 14px;
-  color: var(--dark);
-  line-height: 1.75;
-}
-.text-block p { margin-bottom: 8px; }
-.text-block p:last-child { margin-bottom: 0; }
-strong { font-weight: 600; }
+/* Text */
+.text { font-size: 14px; color: var(--dark); line-height: 1.75; }
+.text p { margin-bottom: 8px; }
+.text p:last-child { margin-bottom: 0; }
 
-/* 分节标题（巡检内） */
-.section-title {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--light);
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  margin: 14px 0 6px;
-}
-.section-title:first-child { margin-top: 0; }
+/* Full digest toggle */
+.full-toggle { display: flex; align-items: center; justify-content: space-between; cursor: pointer; padding: 12px 16px; background: var(--card); border-radius: 10px; margin-bottom: 10px; border: 1px dashed var(--border); color: var(--mid); font-size: 13px; user-select: none; }
+.full-toggle:hover { color: var(--dark); border-color: #ccc; }
+.full-toggle .arrow { font-size: 11px; transition: transform .2s; }
+.full-toggle.open .arrow { transform: rotate(180deg); }
+.full-content { display: none; background: var(--card); border-radius: 10px; padding: 16px; margin-bottom: 10px; font-size: 13px; color: var(--mid); line-height: 1.8; white-space: pre-wrap; word-break: break-word; max-height: 60vh; overflow-y: auto; }
+.full-content.visible { display: block; }
 
-/* Empty / Error */
-.empty { color: var(--light); font-size: 14px; font-style: italic; }
-.error-box { background: #fef2f2; border-radius: 8px; padding: 14px; color: #991b1b; font-size: 14px; }
+.empty { color: var(--light); font-size: 13px; font-style: italic; }
+.err { background: #fef2f2; border-radius: 8px; padding: 14px; color: #991b1b; font-size: 14px; }
 </style>
 </head>
 <body>
 
 <header class="hdr">
   <h1>贝塞尔<span>每日简报</span></h1>
-  <div class="date" id="hdr-date">加载中...</div>
+  <div class="date" id="hdr-date">...</div>
 </header>
 
 <div class="tabs">
@@ -187,8 +96,8 @@ strong { font-weight: 600; }
   <button class="tab" onclick="switchTab('learn')">🧠 外部学习</button>
 </div>
 
-<div class="main" id="app">
-  <div style="text-align:center;padding:60px 0;color:var(--light)">⏳ 加载中...</div>
+<div id="app">
+  <div style="text-align:center;padding:60px;color:var(--light)">⏳</div>
 </div>
 
 <script>
@@ -196,87 +105,125 @@ let currentTab = 'digest';
 
 function switchTab(name) {
   currentTab = name;
-  document.querySelectorAll('.tab').forEach((t,i) => {
-    t.classList.toggle('active', ['digest','patrol','learn'][i] === name);
+  ['digest','patrol','learn'].forEach((t,i) => {
+    document.querySelectorAll('.tab')[i].classList.toggle('active', t===name);
   });
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.getElementById('panel-' + name)?.classList.add('active');
+  document.getElementById('panel-'+name)?.classList.add('active');
 }
 
-function safe(s) { return s ? String(s) : ''; }
+function s(v) { return v ? String(v) : ''; }
 
-// 把多行文字转成段落列表
-function toParas(s) {
-  if (!s) return '';
-  return safe(s)
-    .split(/\n{2,}/)
-    .map(p => p.trim().replace(/\n/g, '<br>').replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>'))
+function esc(v) {
+  return s(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function bold(v) {
+  return esc(v).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
+}
+
+function toParas(v) {
+  if (!v) return '';
+  return s(v).split(/\n{2,}/)
+    .map(p => p.trim().replace(/\n/g,'<br>'))
     .filter(Boolean)
-    .map(p => `<p>${p}</p>`)
-    .join('');
+    .map(p => `<p>${bold(p)}</p>`).join('');
 }
 
-// 把分号/换行分隔的列表渲染成 li
-function toList(s) {
-  if (!s) return '<span class="empty">无</span>';
-  const items = safe(s)
-    .split(/[；;\n]/)
-    .map(x => x.replace(/^[①②③④⑤⑥⑦⑧\d]+[.、．]\s*/, '').replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').trim())
+function toList(v) {
+  if (!v) return '<span class="empty">无</span>';
+  const items = s(v).split(/[；;\n]/)
+    .map(x => x.replace(/^[①②③④⑤⑥\d]+[.、．\s]\s*/,'').replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').trim())
     .filter(Boolean);
   if (!items.length) return '<span class="empty">无</span>';
-  return `<ul class="item-list">${items.map((x,i) => `<li data-n="${i+1}">${x}</li>`).join('')}</ul>`;
+  return `<ul class="list">${items.map((x,i)=>`<li><span class="num">${i+1}</span><span>${x}</span></li>`).join('')}</ul>`;
 }
 
-// 关键词 → pills
-function toPills(s) {
-  if (!s) return '<span class="empty">无</span>';
-  return `<div class="pills">${safe(s).split(/[、，,·・]/).map(x=>x.trim()).filter(Boolean).map(x=>`<span class="pill">${x}</span>`).join('')}</div>`;
+function toPills(v) {
+  if (!v) return '<span class="empty">无</span>';
+  return `<div class="pills">${s(v).split(/[、，,·・]/).map(x=>x.trim()).filter(Boolean).map(x=>`<span class="pill">${esc(x)}</span>`).join('')}</div>`;
 }
 
-function renderDigest(d) {
-  if (!d) return '<div class="error-box">昨日日报数据缺失</div>';
-  return `
-    <div class="block">
-      <div class="block-label gray">关键词</div>
-      ${toPills(d.keywords)}
+function subnav(items) {
+  // items: [{id, label}]
+  return `<div class="subnav">${items.map(it=>`<a href="#${it.id}" onclick="scrollTo('${it.id}')">${it.label}</a>`).join('')}</div>`;
+}
+
+function scrollTo(id) {
+  const el = document.getElementById(id);
+  if (el) { el.scrollIntoView({behavior:'smooth', block:'start'}); }
+}
+
+function renderDigest(d, fullText) {
+  if (!d) return '<div class="main"><div class="err">昨日日报数据缺失</div></div>';
+  const nav = subnav([
+    {id:'d-keywords', label:'关键词'},
+    {id:'d-cognition', label:'认知升级'},
+    {id:'d-decisions', label:'核心决策'},
+    {id:'d-todo', label:'待办'},
+    {id:'d-unsolved', label:'未解决'},
+    {id:'d-full', label:'完整日报 ↓'},
+  ]);
+  return nav + `<div class="main">
+    <div class="block" id="d-keywords"><div class="block-label gray">关键词</div>${toPills(d.keywords)}</div>
+    <div class="block" id="d-cognition"><div class="block-label orange">认知升级</div><div class="hl">${bold(d.cognition) || '<span class="empty">无</span>'}</div></div>
+    <div class="block" id="d-decisions"><div class="block-label red">核心决策</div>${toList(d.decisions)}</div>
+    <div class="block" id="d-todo"><div class="block-label blue">T+0 待办</div>${toList(d.todo)}</div>
+    ${d.unsolved ? `<div class="block" id="d-unsolved"><div class="block-label gray">未解决问题</div><div class="text">${toParas(d.unsolved)}</div></div>` : ''}
+    <div id="d-full">
+      <div class="full-toggle" id="full-btn" onclick="toggleFull()">
+        <span>📄 完整日报原文（${d.date}）</span>
+        <span class="arrow">▾</span>
+      </div>
+      <div class="full-content" id="full-body">${esc(fullText || '')}</div>
     </div>
-    <div class="block">
-      <div class="block-label orange">认知升级</div>
-      <div class="highlight">${safe(d.cognition) || '<span class="empty">无</span>'}</div>
-    </div>
-    <div class="block">
-      <div class="block-label red">核心决策</div>
-      ${toList(d.decisions)}
-    </div>
-    <div class="block">
-      <div class="block-label blue">T+0 待办</div>
-      ${toList(d.todo)}
-    </div>
-    ${d.unsolved ? `<div class="block"><div class="block-label gray">未解决问题</div><div class="text-block">${toParas(d.unsolved)}</div></div>` : ''}
-  `;
+  </div>`;
+}
+
+function toggleFull() {
+  const btn = document.getElementById('full-btn');
+  const body = document.getElementById('full-body');
+  const open = body.classList.toggle('visible');
+  btn.classList.toggle('open', open);
 }
 
 function renderPatrol(d) {
-  if (!d) return '<div class="error-box">今日巡检数据缺失</div>';
-  return `
-    ${d.headline ? `<div class="block"><div class="highlight">${safe(d.headline).replace(/\n---\s*$/, '').trim()}</div></div>` : ''}
-    ${d.leverage ? `<div class="block"><div class="block-label orange">今日杠杆点</div><div class="text-block">${toParas(d.leverage)}</div></div>` : ''}
-    ${d.contradiction ? `<div class="block"><div class="block-label red">矛盾</div><div class="text-block">${toParas(d.contradiction)}</div></div>` : ''}
-    ${d.avoidance ? `<div class="block"><div class="block-label red">在回避什么</div><div class="text-block">${toParas(d.avoidance)}</div></div>` : ''}
-    ${d.trajectory ? `<div class="block"><div class="block-label blue">7 天轨迹</div><div class="text-block">${toParas(d.trajectory)}</div></div>` : ''}
-    ${d.upgrade ? `<div class="block"><div class="block-label green">我的升级点</div><div class="text-block">${toParas(d.upgrade)}</div></div>` : ''}
-  `;
+  if (!d) return '<div class="main"><div class="err">今日巡检数据缺失</div></div>';
+  const nav = subnav([
+    {id:'p-headline', label:'今日判断'},
+    {id:'p-leverage', label:'杠杆点'},
+    {id:'p-contradiction', label:'矛盾'},
+    {id:'p-avoidance', label:'回避'},
+    {id:'p-trajectory', label:'7天轨迹'},
+    {id:'p-upgrade', label:'升级点'},
+  ]);
+  const clean = v => s(v).replace(/\n---\s*$/, '').trim();
+  return nav + `<div class="main">
+    ${d.headline ? `<div class="block" id="p-headline"><div class="hl">${bold(clean(d.headline))}</div></div>` : ''}
+    ${d.leverage ? `<div class="block" id="p-leverage"><div class="block-label orange">今日杠杆点</div><div class="text">${toParas(clean(d.leverage))}</div></div>` : ''}
+    ${d.contradiction ? `<div class="block" id="p-contradiction"><div class="block-label red">矛盾</div><div class="text">${toParas(clean(d.contradiction))}</div></div>` : ''}
+    ${d.avoidance ? `<div class="block" id="p-avoidance"><div class="block-label red">在回避什么</div><div class="text">${toParas(clean(d.avoidance))}</div></div>` : ''}
+    ${d.trajectory ? `<div class="block" id="p-trajectory"><div class="block-label blue">7 天轨迹</div><div class="text">${toParas(clean(d.trajectory))}</div></div>` : ''}
+    ${d.upgrade ? `<div class="block" id="p-upgrade"><div class="block-label green">我的升级点</div><div class="text">${toParas(clean(d.upgrade))}</div></div>` : ''}
+  </div>`;
 }
 
 function renderLearn(d) {
-  if (!d) return '<div class="block"><div class="empty">今日外部学习尚未完成，10:17 后自动更新。</div></div>';
-  return `
-    ${d.direction ? `<div class="block"><div class="block-label green">今日学习方向</div><div class="highlight green">${safe(d.direction)}</div></div>` : ''}
-    ${d.findings ? `<div class="block"><div class="block-label blue">重点发现</div><div class="text-block">${toParas(d.findings)}</div></div>` : ''}
-    ${d.blind_spots ? `<div class="block"><div class="block-label gray">认知盲区</div><div class="text-block">${toParas(d.blind_spots)}</div></div>` : ''}
-    ${d.tools ? `<div class="block"><div class="block-label orange">值得学的工具</div><div class="text-block">${toParas(d.tools)}</div></div>` : ''}
-    ${d.actions ? `<div class="block"><div class="block-label red">关键行动项</div>${toList(d.actions)}</div>` : ''}
-  `;
+  if (!d) return `<div class="main"><div class="block"><span class="empty">今日外部学习尚未完成，10:17 后自动更新。</span></div></div>`;
+  const nav = subnav([
+    {id:'l-direction', label:'学习方向'},
+    {id:'l-findings', label:'重点发现'},
+    {id:'l-blind', label:'认知盲区'},
+    {id:'l-tools', label:'值得学的工具'},
+    {id:'l-actions', label:'行动项'},
+  ]);
+  return nav + `<div class="main">
+    ${d.direction ? `<div class="block" id="l-direction"><div class="block-label green">今日学习方向</div><div class="hl green">${bold(d.direction)}</div></div>` : ''}
+    ${d.findings  ? `<div class="block" id="l-findings"><div class="block-label blue">重点发现</div><div class="text">${toParas(d.findings)}</div></div>` : ''}
+    ${d.blind_spots ? `<div class="block" id="l-blind"><div class="block-label gray">认知盲区</div><div class="text">${toParas(d.blind_spots)}</div></div>` : ''}
+    ${d.tools ? `<div class="block" id="l-tools"><div class="block-label orange">值得学的工具</div><div class="text">${toParas(d.tools)}</div></div>` : ''}
+    ${d.actions ? `<div class="block" id="l-actions"><div class="block-label red">关键行动项</div>${toList(d.actions)}</div>` : ''}
+  </div>`;
 }
 
 async function load() {
@@ -285,22 +232,19 @@ async function load() {
     const res = await fetch('data.json?t=' + Date.now());
     if (!res.ok) throw new Error('数据加载失败');
     const d = await res.json();
-
     document.getElementById('hdr-date').textContent = d.date || '';
     document.title = `每日简报 · ${d.date || ''}`;
-
     app.innerHTML = `
-      <div id="panel-digest" class="tab-panel active">${renderDigest(d.digest)}</div>
+      <div id="panel-digest" class="tab-panel active">${renderDigest(d.digest, d.digest?.full_raw || d.digest?.full)}</div>
       <div id="panel-patrol" class="tab-panel">${renderPatrol(d.patrol)}</div>
       <div id="panel-learn" class="tab-panel">${renderLearn(d.learn)}</div>
     `;
     switchTab(currentTab);
   } catch(e) {
-    app.innerHTML = `<div class="error-box">⚠️ ${e.message}</div>`;
+    app.innerHTML = `<div class="main"><div class="err">⚠️ ${e.message}</div></div>`;
     document.getElementById('hdr-date').textContent = new Date().toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric',weekday:'short'});
   }
 }
-
 load();
 </script>
 </body>
