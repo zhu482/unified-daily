@@ -15,10 +15,8 @@
   --bg: #fafafa;
   --card: #fff;
   --border: #e5e5e5;
-  --patrol-bg: #fff7ed;
-  --patrol-border: #f97316;
-  --learn-bg: #f0fdf4;
-  --learn-border: #22c55e;
+  --orange: #f97316;
+  --green: #22c55e;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
@@ -27,205 +25,109 @@ body {
   font-family: 'Noto Sans SC', system-ui, sans-serif;
   font-size: 15px;
   line-height: 1.7;
+  padding-bottom: 80px;
 }
 body::before { content: ''; display: block; height: 5px; background: var(--red); }
 
-/* Header */
 .hdr {
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 20px 20px 14px;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  flex-wrap: wrap;
-  gap: 8px;
-  border-bottom: 1px solid var(--border);
+  max-width: 800px; margin: 0 auto; padding: 18px 20px 14px;
+  display: flex; justify-content: space-between; align-items: flex-end;
+  flex-wrap: wrap; gap: 8px; border-bottom: 1px solid var(--border);
 }
-.hdr h1 { font-family: 'Noto Serif SC', serif; font-size: 22px; font-weight: 700; }
+.hdr h1 { font-family: 'Noto Serif SC', serif; font-size: 21px; font-weight: 700; }
 .hdr h1 span { color: var(--red); }
 .hdr .sub { font-size: 11px; color: var(--light); letter-spacing: 1px; margin-top: 3px; }
 .hdr .date { font-size: 13px; color: var(--mid); text-align: right; }
 
-/* Main */
-.main { max-width: 720px; margin: 0 auto; padding: 20px; }
+/* Tabs */
+.tabs {
+  max-width: 800px; margin: 0 auto;
+  display: flex; gap: 0;
+  border-bottom: 2px solid var(--border);
+  position: sticky; top: 0;
+  background: var(--bg); z-index: 10;
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+}
+.tabs::-webkit-scrollbar { display: none; }
+.tab {
+  padding: 12px 18px; font-size: 14px; font-weight: 500;
+  color: var(--mid); cursor: pointer;
+  border-bottom: 2px solid transparent; margin-bottom: -2px;
+  transition: all .2s; white-space: nowrap; flex-shrink: 0;
+  border: none; background: none; font-family: inherit;
+}
+.tab:hover { color: var(--dark); }
+.tab.active { color: var(--red); border-bottom: 2px solid var(--red); font-weight: 600; }
+@media(max-width:480px) { .tab { padding: 10px 12px; font-size: 13px; } }
 
-/* Section */
-.section {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 20px;
-  margin-bottom: 16px;
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+.main { max-width: 800px; margin: 0 auto; padding: 20px; }
+
+/* Card */
+.card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 20px; margin-bottom: 14px;
 }
-.section-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 14px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--border);
-}
-.section-icon { font-size: 18px; }
-.section-title {
-  font-family: 'Noto Serif SC', serif;
-  font-size: 16px;
-  font-weight: 700;
-}
-.section-badge {
-  margin-left: auto;
-  font-size: 11px;
-  color: var(--light);
-  background: #f5f5f5;
-  padding: 2px 8px;
-  border-radius: 20px;
+.card-title {
+  font-family: 'Noto Serif SC', serif; font-size: 15px; font-weight: 700;
+  margin-bottom: 12px; display: flex; align-items: center; gap: 6px;
+  padding-bottom: 10px; border-bottom: 1px solid var(--border);
 }
 
-/* 昨日速览 */
-.digest-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-bottom: 12px;
+/* 速览 grid */
+.meta-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;
 }
-@media(max-width: 480px) { .digest-grid { grid-template-columns: 1fr; } }
-.digest-item {
-  background: #f9f9f9;
-  border-radius: 8px;
-  padding: 12px;
-}
-.digest-label {
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--light);
-  letter-spacing: 0.5px;
-  margin-bottom: 5px;
-  text-transform: uppercase;
-}
-.digest-value { font-size: 14px; color: var(--dark); line-height: 1.6; }
+@media(max-width:480px) { .meta-grid { grid-template-columns: 1fr; } }
+.meta-item { background: #f9f9f9; border-radius: 8px; padding: 12px; }
+.meta-label { font-size: 11px; font-weight: 600; color: var(--light); letter-spacing: .5px; margin-bottom: 4px; text-transform: uppercase; }
+.meta-value { font-size: 14px; color: var(--dark); line-height: 1.6; }
 
-.digest-full {
-  font-size: 13px;
-  color: var(--mid);
-  line-height: 1.7;
-  white-space: pre-wrap;
-  border-top: 1px solid var(--border);
-  padding-top: 12px;
-  margin-top: 4px;
+.full-text {
+  font-size: 13px; color: var(--mid); line-height: 1.75;
+  white-space: pre-wrap; border-top: 1px solid var(--border);
+  padding-top: 12px; margin-top: 4px;
 }
 
 /* 巡检 */
-.patrol-headline {
-  background: var(--patrol-bg);
-  border-left: 4px solid var(--patrol-border);
-  border-radius: 0 8px 8px 0;
-  padding: 14px 16px;
-  margin-bottom: 14px;
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 1.6;
-  color: #9a3412;
+.headline-box {
+  background: #fff7ed; border-left: 4px solid var(--orange);
+  border-radius: 0 8px 8px 0; padding: 14px 16px; margin-bottom: 14px;
+  font-size: 16px; font-weight: 600; line-height: 1.6; color: #9a3412;
 }
-.patrol-block { margin-bottom: 14px; }
-.patrol-block-title {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--patrol-border);
-  letter-spacing: 0.5px;
-  margin-bottom: 6px;
+.block { margin-bottom: 14px; }
+.block:last-child { margin-bottom: 0; }
+.block-label {
+  font-size: 11px; font-weight: 600; letter-spacing: .5px; margin-bottom: 6px;
   text-transform: uppercase;
 }
-.patrol-block-content {
-  font-size: 14px;
-  color: var(--dark);
-  line-height: 1.7;
-  white-space: pre-wrap;
-}
+.block-label.orange { color: var(--orange); }
+.block-label.red { color: var(--red); }
+.block-label.green { color: var(--green); }
+.block-label.blue { color: #3b82f6; }
+.block-content { font-size: 14px; color: var(--dark); line-height: 1.75; white-space: pre-wrap; }
 
 /* 外部学习 */
-.learn-block { margin-bottom: 14px; }
-.learn-block:last-child { margin-bottom: 0; }
-.learn-block-title {
-  font-size: 12px;
-  font-weight: 600;
-  color: #16a34a;
-  letter-spacing: 0.5px;
-  margin-bottom: 6px;
-  text-transform: uppercase;
-}
-.learn-block-content {
-  font-size: 14px;
-  color: var(--dark);
-  line-height: 1.7;
-  white-space: pre-wrap;
-}
 .learn-highlight {
-  background: var(--learn-bg);
-  border-left: 4px solid var(--learn-border);
-  border-radius: 0 8px 8px 0;
-  padding: 12px 16px;
-  font-size: 15px;
-  font-weight: 500;
-  color: #166534;
-  margin-bottom: 14px;
-  line-height: 1.6;
+  background: #f0fdf4; border-left: 4px solid var(--green);
+  border-radius: 0 8px 8px 0; padding: 12px 16px;
+  font-size: 15px; font-weight: 500; color: #166534;
+  margin-bottom: 14px; line-height: 1.6;
 }
 
 /* Loading / Error */
-.loading {
-  text-align: center;
-  padding: 60px 20px;
-  color: var(--light);
-  font-size: 15px;
-}
-.error {
-  background: #fef2f2;
-  border: 1px solid #fecaca;
-  border-radius: 8px;
-  padding: 16px;
-  color: #991b1b;
-  font-size: 14px;
-}
+.loading { text-align: center; padding: 60px 20px; color: var(--light); font-size: 15px; }
+.error { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 16px; color: #991b1b; font-size: 14px; }
 
 /* Footer */
 .footer {
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 16px 20px 32px;
-  text-align: center;
-  color: var(--light);
-  font-size: 12px;
+  max-width: 800px; margin: 0 auto; padding: 16px 20px 20px;
+  text-align: center; color: var(--light); font-size: 12px;
   border-top: 1px solid var(--border);
 }
 .footer a { color: var(--red); }
-
-/* Actions bar on mobile */
-.actions {
-  position: sticky;
-  bottom: 0;
-  background: rgba(250,250,250,0.95);
-  backdrop-filter: blur(8px);
-  border-top: 1px solid var(--border);
-  padding: 10px 20px;
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-}
-.action-btn {
-  font-size: 13px;
-  padding: 8px 16px;
-  border-radius: 20px;
-  border: 1px solid var(--border);
-  background: var(--card);
-  color: var(--dark);
-  cursor: pointer;
-  font-family: inherit;
-}
-.action-btn.primary {
-  background: var(--red);
-  color: #fff;
-  border-color: var(--red);
-}
 </style>
 </head>
 <body>
@@ -238,142 +140,116 @@ body::before { content: ''; display: block; height: 5px; background: var(--red);
   <div class="date" id="hdr-date">加载中...</div>
 </header>
 
+<div class="tabs" id="tabs-bar">
+  <button class="tab active" onclick="switchTab('digest')">📅 昨日速览</button>
+  <button class="tab" onclick="switchTab('patrol')">🔍 今日巡检</button>
+  <button class="tab" onclick="switchTab('learn')">🧠 外部学习</button>
+</div>
+
 <div class="main" id="app">
   <div class="loading">⏳ 加载中...</div>
 </div>
 
 <div class="footer">
-  由自进化系统每日 10:45 自动生成 · <a href="https://zhu482.github.io/unified-daily/">统一情报日报</a>
+  由自进化系统每日 10:45 自动生成 ·
+  <a href="https://zhu482.github.io/unified-daily/">统一情报日报</a>
 </div>
 
 <script>
-async function load() {
-  const app = document.getElementById('app');
-  const hdrDate = document.getElementById('hdr-date');
+let currentTab = 'digest';
+let data = null;
 
-  try {
-    const res = await fetch('data.json?t=' + Date.now());
-    if (!res.ok) throw new Error('数据文件未找到');
-    const d = await res.json();
-
-    // 更新标题日期
-    hdrDate.textContent = d.date || '未知日期';
-    document.title = `贝塞尔每日简报 · ${d.date || ''}`;
-
-    let html = '';
-
-    // ── 昨日速览 ──────────────────────────────────────────────
-    if (d.digest) {
-      html += `<div class="section">
-  <div class="section-header">
-    <span class="section-icon">📅</span>
-    <span class="section-title">昨日速览</span>
-    <span class="section-badge">${d.digest.date || ''}</span>
-  </div>`;
-
-      if (d.digest.keywords || d.digest.cognition || d.digest.decisions || d.digest.todo) {
-        html += `<div class="digest-grid">`;
-        if (d.digest.keywords) html += `<div class="digest-item"><div class="digest-label">关键词</div><div class="digest-value">${d.digest.keywords}</div></div>`;
-        if (d.digest.cognition) html += `<div class="digest-item"><div class="digest-label">认知升级</div><div class="digest-value">${d.digest.cognition}</div></div>`;
-        if (d.digest.decisions) html += `<div class="digest-item"><div class="digest-label">核心决策</div><div class="digest-value">${d.digest.decisions}</div></div>`;
-        if (d.digest.todo) html += `<div class="digest-item"><div class="digest-label">T+0 待办</div><div class="digest-value">${d.digest.todo}</div></div>`;
-        html += `</div>`;
-      }
-
-      if (d.digest.full) {
-        html += `<div class="digest-full">${escHtml(d.digest.full)}</div>`;
-      }
-
-      html += `</div>`;
-    }
-
-    // ── 今日巡检 ──────────────────────────────────────────────
-    if (d.patrol) {
-      html += `<div class="section">
-  <div class="section-header">
-    <span class="section-icon">🔍</span>
-    <span class="section-title">今日巡检</span>
-    <span class="section-badge">09:17</span>
-  </div>`;
-
-      if (d.patrol.headline) {
-        html += `<div class="patrol-headline">${escHtml(d.patrol.headline)}</div>`;
-      }
-      if (d.patrol.leverage) {
-        html += `<div class="patrol-block">
-    <div class="patrol-block-title">今日杠杆点</div>
-    <div class="patrol-block-content">${escHtml(d.patrol.leverage)}</div>
-  </div>`;
-      }
-      if (d.patrol.contradiction) {
-        html += `<div class="patrol-block">
-    <div class="patrol-block-title">矛盾</div>
-    <div class="patrol-block-content">${escHtml(d.patrol.contradiction)}</div>
-  </div>`;
-      }
-      if (d.patrol.upgrade) {
-        html += `<div class="patrol-block">
-    <div class="patrol-block-title">我的升级点</div>
-    <div class="patrol-block-content">${escHtml(d.patrol.upgrade)}</div>
-  </div>`;
-      }
-
-      html += `</div>`;
-    }
-
-    // ── 外部学习 ──────────────────────────────────────────────
-    if (d.learn) {
-      html += `<div class="section">
-  <div class="section-header">
-    <span class="section-icon">🧠</span>
-    <span class="section-title">外部学习</span>
-    <span class="section-badge">10:17</span>
-  </div>`;
-
-      if (d.learn.direction) {
-        html += `<div class="learn-highlight">${escHtml(d.learn.direction)}</div>`;
-      }
-      if (d.learn.findings) {
-        html += `<div class="learn-block">
-    <div class="learn-block-title">重点发现</div>
-    <div class="learn-block-content">${escHtml(d.learn.findings)}</div>
-  </div>`;
-      }
-      if (d.learn.blind_spots) {
-        html += `<div class="learn-block">
-    <div class="learn-block-title">认知盲区</div>
-    <div class="learn-block-content">${escHtml(d.learn.blind_spots)}</div>
-  </div>`;
-      }
-      if (d.learn.actions) {
-        html += `<div class="learn-block">
-    <div class="learn-block-title">关键行动项</div>
-    <div class="learn-block-content">${escHtml(d.learn.actions)}</div>
-  </div>`;
-      }
-
-      html += `</div>`;
-    }
-
-    if (!d.digest && !d.patrol && !d.learn) {
-      html = '<div class="error">今日数据尚未生成，请在 10:45 后刷新。</div>';
-    }
-
-    app.innerHTML = html;
-
-  } catch (e) {
-    app.innerHTML = `<div class="error">⚠️ ${e.message}<br><br>数据通常在每日 10:45 更新，如刚过 10:45 请稍等片刻再刷新。</div>`;
-    hdrDate.textContent = new Date().toLocaleDateString('zh-CN', {year:'numeric',month:'long',day:'numeric',weekday:'short'});
-  }
+function switchTab(name) {
+  currentTab = name;
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  const idx = ['digest','patrol','learn'].indexOf(name);
+  document.querySelectorAll('.tab')[idx]?.classList.add('active');
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + name)?.classList.add('active');
 }
 
-function escHtml(s) {
+function esc(s) {
+  if (!s) return '';
   return String(s)
-    .replace(/&/g,'&amp;')
-    .replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;')
-    .replace(/"/g,'&quot;')
-    .replace(/\n/g,'<br>');
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/\n/g,'<br>');
+}
+
+function renderDigest(d) {
+  if (!d) return '<div class="error">今日昨日日报数据缺失</div>';
+  let h = '';
+  if (d.keywords || d.cognition || d.decisions || d.todo) {
+    h += '<div class="meta-grid">';
+    if (d.keywords) h += `<div class="meta-item"><div class="meta-label">关键词</div><div class="meta-value">${esc(d.keywords)}</div></div>`;
+    if (d.cognition) h += `<div class="meta-item"><div class="meta-label">认知升级</div><div class="meta-value">${esc(d.cognition)}</div></div>`;
+    if (d.decisions) h += `<div class="meta-item"><div class="meta-label">核心决策</div><div class="meta-value">${esc(d.decisions)}</div></div>`;
+    if (d.todo) h += `<div class="meta-item"><div class="meta-label">T+0 待办</div><div class="meta-value">${esc(d.todo)}</div></div>`;
+    h += '</div>';
+  }
+  if (d.full) h += `<div class="full-text">${esc(d.full)}</div>`;
+  return h || '<div class="error">速览数据为空</div>';
+}
+
+function renderPatrol(d) {
+  if (!d) return '<div class="error">今日巡检数据缺失</div>';
+  let h = '';
+  if (d.headline) h += `<div class="headline-box">${esc(d.headline)}</div>`;
+  if (d.leverage) h += `<div class="block"><div class="block-label orange">今日杠杆点</div><div class="block-content">${esc(d.leverage)}</div></div>`;
+  if (d.contradiction) h += `<div class="block"><div class="block-label red">矛盾</div><div class="block-content">${esc(d.contradiction)}</div></div>`;
+  if (d.avoidance) h += `<div class="block"><div class="block-label red">在回避什么</div><div class="block-content">${esc(d.avoidance)}</div></div>`;
+  if (d.trajectory) h += `<div class="block"><div class="block-label blue">7天轨迹</div><div class="block-content">${esc(d.trajectory)}</div></div>`;
+  if (d.upgrade) h += `<div class="block"><div class="block-label green">我的升级点</div><div class="block-content">${esc(d.upgrade)}</div></div>`;
+  return h || '<div class="error">巡检数据为空</div>';
+}
+
+function renderLearn(d) {
+  if (!d) return '<div class="error">今日外部学习尚未生成（10:17 后更新）</div>';
+  let h = '';
+  if (d.direction) h += `<div class="learn-highlight">${esc(d.direction)}</div>`;
+  if (d.findings) h += `<div class="block"><div class="block-label green">重点发现</div><div class="block-content">${esc(d.findings)}</div></div>`;
+  if (d.blind_spots) h += `<div class="block"><div class="block-label blue">认知盲区</div><div class="block-content">${esc(d.blind_spots)}</div></div>`;
+  if (d.tools) h += `<div class="block"><div class="block-label orange">值得学的工具</div><div class="block-content">${esc(d.tools)}</div></div>`;
+  if (d.actions) h += `<div class="block"><div class="block-label red">关键行动项</div><div class="block-content">${esc(d.actions)}</div></div>`;
+  return h || '<div class="error">外部学习数据为空</div>';
+}
+
+async function load() {
+  const app = document.getElementById('app');
+  try {
+    const res = await fetch('data.json?t=' + Date.now());
+    if (!res.ok) throw new Error('数据文件加载失败');
+    data = await res.json();
+
+    document.getElementById('hdr-date').textContent = data.date || '';
+    document.title = `贝塞尔每日简报 · ${data.date || ''}`;
+
+    app.innerHTML = `
+      <div id="panel-digest" class="tab-panel active">
+        <div class="card">
+          <div class="card-title">📅 昨日速览 <span style="font-size:12px;font-weight:400;color:var(--light);margin-left:auto">${data.digest?.date || ''}</span></div>
+          ${renderDigest(data.digest)}
+        </div>
+      </div>
+      <div id="panel-patrol" class="tab-panel">
+        <div class="card">
+          <div class="card-title">🔍 今日巡检</div>
+          ${renderPatrol(data.patrol)}
+        </div>
+      </div>
+      <div id="panel-learn" class="tab-panel">
+        <div class="card">
+          <div class="card-title">🧠 外部学习</div>
+          ${renderLearn(data.learn)}
+        </div>
+      </div>
+    `;
+
+    switchTab(currentTab);
+
+  } catch(e) {
+    app.innerHTML = `<div class="error">⚠️ ${e.message}<br><br>数据通常在每日 10:45 更新，如刚过 10:45 请稍等片刻再刷新。</div>`;
+    document.getElementById('hdr-date').textContent = new Date().toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric',weekday:'short'});
+  }
 }
 
 load();
