@@ -76,8 +76,15 @@ body::before { content: ''; display: block; height: 4px; background: var(--red);
 .full-toggle:hover { color: var(--dark); border-color: #ccc; }
 .full-toggle .arrow { font-size: 11px; transition: transform .2s; }
 .full-toggle.open .arrow { transform: rotate(180deg); }
-.full-content { display: none; background: var(--card); border-radius: 10px; padding: 16px; margin-bottom: 10px; font-size: 13px; color: var(--mid); line-height: 1.8; white-space: pre-wrap; word-break: break-word; max-height: 60vh; overflow-y: auto; }
+.full-content { display: none; background: var(--card); border-radius: 10px; padding: 16px; margin-bottom: 10px; max-height: 60vh; overflow-y: auto; }
 .full-content.visible { display: block; }
+.md h2 { font-family: 'Noto Serif SC', serif; font-size: 15px; font-weight: 700; color: var(--dark); margin: 18px 0 8px; padding-bottom: 4px; border-bottom: 1px solid var(--border); }
+.md h3 { font-size: 14px; font-weight: 600; color: var(--mid); margin: 12px 0 6px; }
+.md p { font-size: 13px; color: var(--mid); line-height: 1.8; margin-bottom: 7px; }
+.md ul { margin: 6px 0 8px 16px; }
+.md ul li { font-size: 13px; color: var(--mid); line-height: 1.7; margin-bottom: 3px; }
+.md hr { border: none; border-top: 1px solid var(--border); margin: 14px 0; }
+.md blockquote { border-left: 3px solid var(--border); padding: 6px 12px; color: var(--light); font-size: 13px; margin: 8px 0; }
 
 .empty { color: var(--light); font-size: 13px; font-style: italic; }
 .err { background: #fef2f2; border-radius: 8px; padding: 14px; color: #991b1b; font-size: 14px; }
@@ -122,7 +129,35 @@ function bold(v) {
   return esc(v).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
 }
 
-function toParas(v) {
+function renderMd(raw) {
+  if (!raw) return '';
+  const lines = raw.split('\n');
+  let html = '';
+  let inUl = false;
+  for (let i = 0; i < lines.length; i++) {
+    let line = lines[i];
+    // inline: bold, inline code
+    const inline = t => t
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/`([^`]+)`/g,'<code>$1</code>')
+      .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+      .replace(/\*(.+?)\*/g,'<em>$1</em>');
+    if (/^---+\s*$/.test(line)) { if(inUl){html+='</ul>';inUl=false;} html+='<hr>'; continue; }
+    if (/^## /.test(line))  { if(inUl){html+='</ul>';inUl=false;} html+=`<h2>${inline(line.slice(3))}</h2>`; continue; }
+    if (/^### /.test(line)) { if(inUl){html+='</ul>';inUl=false;} html+=`<h3>${inline(line.slice(4))}</h3>`; continue; }
+    if (/^[>\-\*] /.test(line) || /^\d+\. /.test(line)) {
+      if(!inUl){html+='<ul>';inUl=true;}
+      html+=`<li>${inline(line.replace(/^[>\-\*\d]+\.?\s+/,''))}</li>`; continue;
+    }
+    if (inUl) { html+='</ul>'; inUl=false; }
+    if (line.trim() === '') { html+=''; continue; }
+    html+=`<p>${inline(line)}</p>`;
+  }
+  if (inUl) html+='</ul>';
+  return `<div class="md">${html}</div>`;
+}
+
+
   if (!v) return '';
   return s(v).split(/\n{2,}/)
     .map(p => p.trim().replace(/\n/g,'<br>'))
@@ -175,7 +210,7 @@ function renderDigest(d, fullText) {
         <span>📄 完整日报原文（${d.date}）</span>
         <span class="arrow">▾</span>
       </div>
-      <div class="full-content" id="full-body">${esc(fullText || '')}</div>
+      <div class="full-content" id="full-body">${renderMd(fullText || '')}</div>
     </div>
   </div>`;
 }
