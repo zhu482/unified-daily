@@ -1,6 +1,6 @@
 {
   "date": "2026年04月09日 周四",
-  "generated_at": "2026-04-09T14:10:50",
+  "generated_at": "2026-04-09T14:23:33",
   "digest": {
     "date": "2026-04-08",
     "keywords": "产品定义卡点、AI效能审计、选题库重建、S10图文全流程、信任建立路径、朋友圈私域空白",
@@ -18,5 +18,16 @@
     "trajectory": "AED 第一期 4 月 15 日，CF 工作本周会继续占据主要注意力（内训、发通知、日历邀请）。\n\n按当前节奏，4 月 16 日（7 天后）：\n- AED 第一期完成，ZZ 在 CF 拿到了一个可见的成果\n- 内容发布：S8 或 S9 可能写完，过去7天大约 3-5 篇\n- 商业目标：产品框架清晰，仍然没有第一个真实的接触\n\n这不是悲观预测，是连续 10 天数据的直接外推。每一次巡检前 ZZ 都做了真实的工作，每一次巡检后产品一页纸还在原位。这个 pattern 不会自己中断，只会在有外部压力出现的时候才中断。\n\n当前唯一的外部压力候选：AED 内训完成后，ZZ 会有一个「工作成果已交付」的喘息期——这个窗口可能是个人商业线最容易推进的时机，大约在 4 月 15 日后。但那也是 6 天以后的事。\n\n---",
     "upgrade": "从 04-08 汇总的 23 条纠正记录里，今天直接影响下次执行的有三条：\n\n**场景 → 我做了什么 → 纠正 → 下次改法**\n\n1. S10 文章入口写成技术视角 → 从 ZZ 的技术设定切入，不是从读者处境 → ZZ 打回「没看懂给谁看」→ 写任何内容前，第一步是想「那个读者今天在哪里、在干什么」，进去之后再开始写\n\n2. 写完草稿追问 ZZ 提供真实案例 → ZZ：「你不要让我进行回答，我给你装了这么多能力，就是想让你来进行深度思考」→ 写作前先扫记忆、扫汇总、扫知识库，90% 情况下不需要问他；确实没有素材就直接说「这个认知没有 ZZ 的经历撑，不推」\n\n3. 逐句覆盖规则只写进了 memory，没存进 SKILL.md → ZZ：「skill 里面不需要加吗」→ 新规则建完，立刻过三层：MEMORY + feedback 文件 + SKILL.md，缺任意一层不算完成\n\n---"
   },
-  "learn": null
+  "learn": null,
+  "pain": {
+    "meta": "采集：387条 | Reddit(165) HN(0) RSS(65) Tavily(54) | 两步LLM选材27条",
+    "overview": {
+      "cases": "试遍所有CRM没一个能用，ADHD销售员自己做了一个\n月成本$24——不是省钱，是把放弃的代价压到不值得恐惧\n两兄弟的App下载25000次，靠的是主动放弃看你数据的权利",
+      "opps": "有流量卖不出去？漏洞不在顶部，在中间那段没人修的断裂\n500人的小subreddit，比焦点小组更诚实，没几个人知道怎么用",
+      "insights": "MVP前那些\"必须解决\"的边缘问题，上线后发现没人遇到\n联盟留存是广告的两倍——信任这件事，可以外包"
+    },
+    "cases": "### 1. 试遍所有CRM没一个能用——ADHD销售员想了想，自己动手做了一个\n\n这位仁兄有ADHD和焦虑症，干的是账户管理销售，每天同时跑多条产品线、拆复杂分佣、盯着永不停歇的管道。市面上每款CRM他都试过，结论是：这些东西是给大脑正常人设计的，跟他没关系。\n\n然后他做了一件大多数人只会抱怨的事——自己动手做了CommissionIQ：极简录入、动态管道、佣金自动拆。现在不急着收钱，30天免费，只要真实反馈。\n\n值得停一下的不是CommissionIQ本身，是为什么市场上一直没有这个东西：CRM是为\"标准销售流程\"设计的，而标准从来不包含那些用起来最痛的人。痛感最强的需求，反而最难被调研到——因为做调研的人，根本不知道自己错过了谁。\n\n_来源：[r/SideProject · Built a CRM for sales guys with ADHD in mind](https://www.reddit.com/r/SideProject/comments/1sg7pq9/)_\n\n---\n\n### 2. Pastewaves创始人：月成本$24——不是省钱，是把放弃的代价压到不值得恐惧\n\n音频分享SaaS Pastewaves，创始人用一个周末搭完核心，全Serverless：CloudFront、DynamoDB、S3、15个Go Lambda函数、Stripe收钱。30+活跃用户，100+注册，月成本$24。\n\n$24意味着什么？意味着这个项目六个月后凉透了，损失比请人吃顿饭还少。\n\n大多数人做产品卡在\"万一失败了怎么办\"这个问题上。Serverless的真实意义不是省钱，是把这个问题的答案改成了\"失败又怎样\"。当放弃的代价低到不值得恐惧，才能真的开始动。\n\n_来源：[r/SideProject · I Went completely Serverless on AWS for my SAAS](https://www.reddit.com/r/SideProject/comments/1sg80us/)_\n\n---\n\n### 3. ReadHero两兄弟：25000下载，零预算，靠的是主动放弃看你数据的权利\n\nReadHero是两兄弟的业余项目——都是书虫，都有同一个困扰：花20小时读完一本好书，三个月后记不住核心。功能不复杂：摄像头扫描纸质书高亮，AI转数字笔记，iCloud同步（开发者完全看不到用户数据），一键导入Goodreads。零预算，25,000+下载，纯靠App Store自然流量。\n\n他们做了一件2026年显得有点反常的事：主动放弃看用户数据的权利。不是做不到，是选择不看。在什么App都想盯着你的时代，这个姿态本身就成了差异化——你终于可以不用假装信任了。\n\n_来源：[r/microsaas · Over 25,000 downloads and zero marketing budget](https://www.reddit.com/r/microsaas/comments/1sg3x8o/)_\n\n---",
+    "opps": "### 1. 有流量卖不出去的人，漏洞不在顶部，在中间那段没人修的断裂\n\nr/solopreneur有人这样写：\"我以为我缺流量。后来发现用户路径是：看到→互动→消失。\"\n\n他拆解了一下，找到三个断口：内容造了注意力但没建信任、用户在行动前一刻犹豫、内容跳到产品页的过渡生硬得像换了个人在说话。原话：\"人们不买软件，买问题解决后的自己。\"\n\n这个描述很多有内容账号的人看完会对号入座。但通常的解法还是继续做内容、继续加流量——往漏斗顶部堆水，没人去查底部的洞在哪。往往修一个断口，比再写10篇内容管用。\n\n_来源：[r/solopreneur · Most people don't have a traffic problem — they have a conversion leak](https://www.reddit.com/r/solopreneur/comments/1sg23a5/)_\n\n---\n\n### 2. 500人的小subreddit，比付费焦点小组更诚实，没几个人知道怎么用\n\nr/indiebiz有人分享了一个做法：用Reoogle筛选低活跃的垂直小subreddit（500-5000人），把产品草稿或落地页标题发进去等反馈。他的原话：\"因为他们活动低，我的帖子不会被埋。成员常是专家，乐于分享，反馈远比大社区细致。\"\n\n早期要真实反馈：大社群帖子被淹，问卷回答敷衍，朋友给的是安慰（顶多是\"挺好的\"）。小社区的价值恰恰因为人少——成员稳定，互相认识，对质量有隐性要求。这个方法不难，但几乎没人系统化在用，全靠偶然发现。\n\n_来源：[r/indiebiz · The loneliness of early-stage marketing and how Reddit micro-communities became my focus group](https://www.reddit.com/r/indiebiz/comments/1sfjkfk/)_\n\n---",
+    "insights": "### 1. MVP前那些\"必须解决\"的边缘问题，99%上线后发现没人遇到——那不是产品风险，是你的焦虑在找合理化借口\n\nr/SaaS有个创始人发帖，列了6个\"当时觉得上线前必须解决\"的问题：PPTX在老Mac的渲染、sitemap日期逻辑、URL尾斜杠、免费计划定几个额度、API credits会不会被烧……上线后发现\"全都不重要\"。加上Pastewaves用极简架构跑通核心，说明用户只关心主干价值，边缘问题是创始人自己的镜子。很多人误以为\"解决边缘问题=更专业\"，实际上早期用户的容忍度远高于创始人的想象——他们包容瑕疵，只要核心痛点被击穿。\n\n_来源：[r/SaaS · How long do you spend overthinking on edge cases?](https://www.reddit.com/r/SaaS/comments/1sg0uzf/)_\n\n---\n\n### 2. 联盟留存是广告的两倍——因为你在把信任问题外包给已经解决了信任的人\n\nObserveOne把联盟分成从10%提到20%，参与度骤升，且联盟客户留存率是付费广告客户的两倍。细节是\"10%几乎零参与，20%突然有人care\"——分成比例是激活开关，不是成本计算。很多人以为联盟是\"让别人帮你卖货\"，但两者触达用户的起点完全不同：广告触达的用户还没过\"我信任这个产品\"这一关；联盟客户在点击之前，推荐人已经用自己的信用背书了一遍。进来的人质量不同，不是因为联盟更精准，是因为信任链已经预跑了一遍。\n\n_来源：[r/microsaas · word of mouth is great but it doesn't scale](https://www.reddit.com/r/microsaas/comments/1sg6egc/)_\n\n---"
+  }
 }

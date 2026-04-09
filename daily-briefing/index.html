@@ -100,6 +100,7 @@ body::before { content: ''; display: block; height: 4px; background: var(--red);
 <div class="tabs">
   <button class="tab active" onclick="switchTab('digest')">📅 昨日速览</button>
   <button class="tab" onclick="switchTab('patrol')">🔍 今日巡检</button>
+  <button class="tab" onclick="switchTab('pain')">📡 多源洞察</button>
   <button class="tab" onclick="switchTab('learn')">🧠 外部学习</button>
 </div>
 
@@ -112,7 +113,7 @@ let currentTab = 'digest';
 
 function switchTab(name) {
   currentTab = name;
-  ['digest','patrol','learn'].forEach((t,i) => {
+  ['digest','patrol','pain','learn'].forEach((t,i) => {
     document.querySelectorAll('.tab')[i].classList.toggle('active', t===name);
   });
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
@@ -244,6 +245,28 @@ function renderPatrol(d) {
   </div>`;
 }
 
+function renderPain(d) {
+  if (!d) return `<div class="main"><div class="block"><span class="empty">今日多源洞察尚未生成，07:00 后自动更新。</span></div></div>`;
+  const nav = subnav([
+    {id:'pa-overview', label:'速览'},
+    {id:'pa-cases', label:'案例'},
+    {id:'pa-opps', label:'机会'},
+    {id:'pa-insights', label:'洞察'},
+  ]);
+  return nav + `<div class="main">
+    ${d.meta ? `<div style="font-size:12px;color:var(--light);padding:4px 0 10px">${esc(d.meta)}</div>` : ''}
+    ${d.overview ? `<div class="block" id="pa-overview">
+      <div class="block-label gray">速览</div>
+      ${d.overview.cases ? `<div style="margin-bottom:8px"><div class="block-label red" style="margin-bottom:4px">案例</div>${toList(d.overview.cases)}</div>` : ''}
+      ${d.overview.opps  ? `<div style="margin-bottom:8px"><div class="block-label orange" style="margin-bottom:4px">机会</div>${toList(d.overview.opps)}</div>` : ''}
+      ${d.overview.insights ? `<div><div class="block-label blue" style="margin-bottom:4px">洞察</div>${toList(d.overview.insights)}</div>` : ''}
+    </div>` : ''}
+    ${d.cases    ? `<div class="block" id="pa-cases"><div class="block-label red">案例</div><div class="text">${renderMd(d.cases)}</div></div>` : ''}
+    ${d.opps     ? `<div class="block" id="pa-opps"><div class="block-label orange">机会</div><div class="text">${renderMd(d.opps)}</div></div>` : ''}
+    ${d.insights ? `<div class="block" id="pa-insights"><div class="block-label blue">洞察</div><div class="text">${renderMd(d.insights)}</div></div>` : ''}
+  </div>`;
+}
+
 function renderLearn(d) {
   if (!d) return `<div class="main"><div class="block"><span class="empty">今日外部学习尚未完成，10:17 后自动更新。</span></div></div>`;
   const nav = subnav([
@@ -273,6 +296,7 @@ async function load() {
     app.innerHTML = `
       <div id="panel-digest" class="tab-panel active">${renderDigest(d.digest, d.digest?.full_raw || d.digest?.full)}</div>
       <div id="panel-patrol" class="tab-panel">${renderPatrol(d.patrol)}</div>
+      <div id="panel-pain" class="tab-panel">${renderPain(d.pain)}</div>
       <div id="panel-learn" class="tab-panel">${renderLearn(d.learn)}</div>
     `;
     switchTab(currentTab);
