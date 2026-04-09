@@ -158,6 +158,7 @@ function renderMd(raw) {
 }
 
 
+function toParas(v) {
   if (!v) return '';
   return s(v).split(/\n{2,}/)
     .map(p => p.trim().replace(/\n/g,'<br>'))
