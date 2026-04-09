@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>贝塞尔每日简报</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #dc2626;
+  --dark: #1a1a1a;
+  --mid: #555;
+  --light: #888;
+  --bg: #fafafa;
+  --card: #fff;
+  --border: #e5e5e5;
+  --patrol-bg: #fff7ed;
+  --patrol-border: #f97316;
+  --learn-bg: #f0fdf4;
+  --learn-border: #22c55e;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--dark);
+  font-family: 'Noto Sans SC', system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+}
+body::before { content: ''; display: block; height: 5px; background: var(--red); }
+
+/* Header */
+.hdr {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 20px 20px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.hdr h1 { font-family: 'Noto Serif SC', serif; font-size: 22px; font-weight: 700; }
+.hdr h1 span { color: var(--red); }
+.hdr .sub { font-size: 11px; color: var(--light); letter-spacing: 1px; margin-top: 3px; }
+.hdr .date { font-size: 13px; color: var(--mid); text-align: right; }
+
+/* Main */
+.main { max-width: 720px; margin: 0 auto; padding: 20px; }
+
+/* Section */
+.section {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.section-icon { font-size: 18px; }
+.section-title {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 16px;
+  font-weight: 700;
+}
+.section-badge {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--light);
+  background: #f5f5f5;
+  padding: 2px 8px;
+  border-radius: 20px;
+}
+
+/* 昨日速览 */
+.digest-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+@media(max-width: 480px) { .digest-grid { grid-template-columns: 1fr; } }
+.digest-item {
+  background: #f9f9f9;
+  border-radius: 8px;
+  padding: 12px;
+}
+.digest-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--light);
+  letter-spacing: 0.5px;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
+.digest-value { font-size: 14px; color: var(--dark); line-height: 1.6; }
+
+.digest-full {
+  font-size: 13px;
+  color: var(--mid);
+  line-height: 1.7;
+  white-space: pre-wrap;
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+  margin-top: 4px;
+}
+
+/* 巡检 */
+.patrol-headline {
+  background: var(--patrol-bg);
+  border-left: 4px solid var(--patrol-border);
+  border-radius: 0 8px 8px 0;
+  padding: 14px 16px;
+  margin-bottom: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.6;
+  color: #9a3412;
+}
+.patrol-block { margin-bottom: 14px; }
+.patrol-block-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--patrol-border);
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+.patrol-block-content {
+  font-size: 14px;
+  color: var(--dark);
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+/* 外部学习 */
+.learn-block { margin-bottom: 14px; }
+.learn-block:last-child { margin-bottom: 0; }
+.learn-block-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #16a34a;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+.learn-block-content {
+  font-size: 14px;
+  color: var(--dark);
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+.learn-highlight {
+  background: var(--learn-bg);
+  border-left: 4px solid var(--learn-border);
+  border-radius: 0 8px 8px 0;
+  padding: 12px 16px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #166534;
+  margin-bottom: 14px;
+  line-height: 1.6;
+}
+
+/* Loading / Error */
+.loading {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--light);
+  font-size: 15px;
+}
+.error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 16px;
+  color: #991b1b;
+  font-size: 14px;
+}
+
+/* Footer */
+.footer {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 16px 20px 32px;
+  text-align: center;
+  color: var(--light);
+  font-size: 12px;
+  border-top: 1px solid var(--border);
+}
+.footer a { color: var(--red); }
+
+/* Actions bar on mobile */
+.actions {
+  position: sticky;
+  bottom: 0;
+  background: rgba(250,250,250,0.95);
+  backdrop-filter: blur(8px);
+  border-top: 1px solid var(--border);
+  padding: 10px 20px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+.action-btn {
+  font-size: 13px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--dark);
+  cursor: pointer;
+  font-family: inherit;
+}
+.action-btn.primary {
+  background: var(--red);
+  color: #fff;
+  border-color: var(--red);
+}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div>
+    <h1>贝塞尔<span>每日简报</span></h1>
+    <div class="sub">Daily Briefing · 自进化系统</div>
+  </div>
+  <div class="date" id="hdr-date">加载中...</div>
+</header>
+
+<div class="main" id="app">
+  <div class="loading">⏳ 加载中...</div>
+</div>
+
+<div class="footer">
+  由自进化系统每日 10:45 自动生成 · <a href="https://zhu482.github.io/unified-daily/">统一情报日报</a>
+</div>
+
+<script>
+async function load() {
+  const app = document.getElementById('app');
+  const hdrDate = document.getElementById('hdr-date');
+
+  try {
+    const res = await fetch('data.json?t=' + Date.now());
+    if (!res.ok) throw new Error('数据文件未找到');
+    const d = await res.json();
+
+    // 更新标题日期
+    hdrDate.textContent = d.date || '未知日期';
+    document.title = `贝塞尔每日简报 · ${d.date || ''}`;
+
+    let html = '';
+
+    // ── 昨日速览 ──────────────────────────────────────────────
+    if (d.digest) {
+      html += `<div class="section">
+  <div class="section-header">
+    <span class="section-icon">📅</span>
+    <span class="section-title">昨日速览</span>
+    <span class="section-badge">${d.digest.date || ''}</span>
+  </div>`;
+
+      if (d.digest.keywords || d.digest.cognition || d.digest.decisions || d.digest.todo) {
+        html += `<div class="digest-grid">`;
+        if (d.digest.keywords) html += `<div class="digest-item"><div class="digest-label">关键词</div><div class="digest-value">${d.digest.keywords}</div></div>`;
+        if (d.digest.cognition) html += `<div class="digest-item"><div class="digest-label">认知升级</div><div class="digest-value">${d.digest.cognition}</div></div>`;
+        if (d.digest.decisions) html += `<div class="digest-item"><div class="digest-label">核心决策</div><div class="digest-value">${d.digest.decisions}</div></div>`;
+        if (d.digest.todo) html += `<div class="digest-item"><div class="digest-label">T+0 待办</div><div class="digest-value">${d.digest.todo}</div></div>`;
+        html += `</div>`;
+      }
+
+      if (d.digest.full) {
+        html += `<div class="digest-full">${escHtml(d.digest.full)}</div>`;
+      }
+
+      html += `</div>`;
+    }
+
+    // ── 今日巡检 ──────────────────────────────────────────────
+    if (d.patrol) {
+      html += `<div class="section">
+  <div class="section-header">
+    <span class="section-icon">🔍</span>
+    <span class="section-title">今日巡检</span>
+    <span class="section-badge">09:17</span>
+  </div>`;
+
+      if (d.patrol.headline) {
+        html += `<div class="patrol-headline">${escHtml(d.patrol.headline)}</div>`;
+      }
+      if (d.patrol.leverage) {
+        html += `<div class="patrol-block">
+    <div class="patrol-block-title">今日杠杆点</div>
+    <div class="patrol-block-content">${escHtml(d.patrol.leverage)}</div>
+  </div>`;
+      }
+      if (d.patrol.contradiction) {
+        html += `<div class="patrol-block">
+    <div class="patrol-block-title">矛盾</div>
+    <div class="patrol-block-content">${escHtml(d.patrol.contradiction)}</div>
+  </div>`;
+      }
+      if (d.patrol.upgrade) {
+        html += `<div class="patrol-block">
+    <div class="patrol-block-title">我的升级点</div>
+    <div class="patrol-block-content">${escHtml(d.patrol.upgrade)}</div>
+  </div>`;
+      }
+
+      html += `</div>`;
+    }
+
+    // ── 外部学习 ──────────────────────────────────────────────
+    if (d.learn) {
+      html += `<div class="section">
+  <div class="section-header">
+    <span class="section-icon">🧠</span>
+    <span class="section-title">外部学习</span>
+    <span class="section-badge">10:17</span>
+  </div>`;
+
+      if (d.learn.direction) {
+        html += `<div class="learn-highlight">${escHtml(d.learn.direction)}</div>`;
+      }
+      if (d.learn.findings) {
+        html += `<div class="learn-block">
+    <div class="learn-block-title">重点发现</div>
+    <div class="learn-block-content">${escHtml(d.learn.findings)}</div>
+  </div>`;
+      }
+      if (d.learn.blind_spots) {
+        html += `<div class="learn-block">
+    <div class="learn-block-title">认知盲区</div>
+    <div class="learn-block-content">${escHtml(d.learn.blind_spots)}</div>
+  </div>`;
+      }
+      if (d.learn.actions) {
+        html += `<div class="learn-block">
+    <div class="learn-block-title">关键行动项</div>
+    <div class="learn-block-content">${escHtml(d.learn.actions)}</div>
+  </div>`;
+      }
+
+      html += `</div>`;
+    }
+
+    if (!d.digest && !d.patrol && !d.learn) {
+      html = '<div class="error">今日数据尚未生成，请在 10:45 后刷新。</div>';
+    }
+
+    app.innerHTML = html;
+
+  } catch (e) {
+    app.innerHTML = `<div class="error">⚠️ ${e.message}<br><br>数据通常在每日 10:45 更新，如刚过 10:45 请稍等片刻再刷新。</div>`;
+    hdrDate.textContent = new Date().toLocaleDateString('zh-CN', {year:'numeric',month:'long',day:'numeric',weekday:'short'});
+  }
+}
+
+function escHtml(s) {
+  return String(s)
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;')
+    .replace(/\n/g,'<br>');
+}
+
+load();
+</script>
+</body>
+</html>
