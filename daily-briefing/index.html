@@ -102,6 +102,7 @@ body::before { content: ''; display: block; height: 4px; background: var(--red);
   <button class="tab" onclick="switchTab('patrol')">🔍 今日巡检</button>
   <button class="tab" onclick="switchTab('pain')">📡 多源洞察</button>
   <button class="tab" onclick="switchTab('learn')">🧠 外部学习</button>
+  <button class="tab" onclick="switchTab('evolution')">🔄 进化复盘</button>
 </div>
 
 <div id="app">
@@ -113,7 +114,7 @@ let currentTab = 'digest';
 
 function switchTab(name) {
   currentTab = name;
-  ['digest','patrol','pain','learn'].forEach((t,i) => {
+  ['digest','patrol','pain','learn','evolution'].forEach((t,i) => {
     document.querySelectorAll('.tab')[i].classList.toggle('active', t===name);
   });
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
@@ -285,6 +286,22 @@ function renderLearn(d) {
   </div>`;
 }
 
+function renderEvolution(d) {
+  if (!d) return `<div class="main"><div class="block"><span class="empty">今日进化复盘尚未生成，01:01 后自动更新。</span></div></div>`;
+  const nav = subnav([
+    {id:'ev-todo', label:'进化点'},
+    {id:'ev-exec', label:'执行记录'},
+    {id:'ev-obs', label:'观察'},
+  ]);
+  const badge = d.success_count ? `<span style="background:#dcfce7;color:#14532d;font-size:12px;padding:2px 8px;border-radius:10px;font-weight:600">✅ ${d.success_count} 条写入</span>` : '';
+  return nav + `<div class="main">
+    ${d.todolist ? `<div class="block" id="ev-todo"><div class="block-label blue" style="display:flex;justify-content:space-between;align-items:center"><span>进化点 Todolist</span>${badge}</div><div class="text">${renderMd(d.todolist)}</div></div>` : ''}
+    ${d.exec_record ? `<div class="block" id="ev-exec"><div class="block-label green">执行记录</div><div class="text">${renderMd(d.exec_record)}</div></div>` : ''}
+    ${d.observations ? `<div class="block" id="ev-obs"><div class="block-label gray">无需进化的观察</div><div class="text">${toParas(d.observations)}</div></div>` : ''}
+    ${!d.todolist && !d.exec_record ? `<div class="block"><span class="empty">今日无进化点</span></div>` : ''}
+  </div>`;
+}
+
 async function load() {
   const app = document.getElementById('app');
   try {
@@ -298,6 +315,7 @@ async function load() {
       <div id="panel-patrol" class="tab-panel">${renderPatrol(d.patrol)}</div>
       <div id="panel-pain" class="tab-panel">${renderPain(d.pain)}</div>
       <div id="panel-learn" class="tab-panel">${renderLearn(d.learn)}</div>
+      <div id="panel-evolution" class="tab-panel">${renderEvolution(d.evolution)}</div>
     `;
     switchTab(currentTab);
   } catch(e) {
