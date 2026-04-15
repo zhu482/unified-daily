@@ -98,11 +98,12 @@ body::before { content: ''; display: block; height: 4px; background: var(--red);
 </header>
 
 <div class="tabs">
-  <button class="tab active" onclick="switchTab('digest')">📅 昨日速览</button>
+  <button class="tab active" onclick="switchTab('must')">⚡ 必看</button>
+  <button class="tab" onclick="switchTab('evolution')">🔄 进化复盘</button>
+  <button class="tab" onclick="switchTab('digest')">📅 昨日速览</button>
   <button class="tab" onclick="switchTab('patrol')">🔍 今日巡检</button>
   <button class="tab" onclick="switchTab('pain')">📡 多源洞察</button>
   <button class="tab" onclick="switchTab('learn')">🧠 外部学习</button>
-  <button class="tab" onclick="switchTab('evolution')">🔄 进化复盘</button>
 </div>
 
 <div id="app">
@@ -110,11 +111,11 @@ body::before { content: ''; display: block; height: 4px; background: var(--red);
 </div>
 
 <script>
-let currentTab = 'digest';
+let currentTab = 'must';
 
 function switchTab(name) {
   currentTab = name;
-  ['digest','patrol','pain','learn','evolution'].forEach((t,i) => {
+  ['must','evolution','digest','patrol','pain','learn'].forEach((t,i) => {
     document.querySelectorAll('.tab')[i].classList.toggle('active', t===name);
   });
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
@@ -190,6 +191,36 @@ function subnav(items) {
 function scrollTo(id) {
   const el = document.getElementById(id);
   if (el) { el.scrollIntoView({behavior:'smooth', block:'start'}); }
+}
+
+function renderMust(patrol, pain) {
+  const clean = v => s(v).replace(/\n---\s*$/, '').trim();
+  let html = '<div class="main">';
+
+  // 今天最需要听的一句话（from patrol.headline）
+  if (patrol?.headline) {
+    html += `<div class="block"><div class="block-label red">今天最需要听的一句话</div><div class="hl red">${bold(clean(patrol.headline))}</div></div>`;
+  }
+
+  // 今日杠杆点（from patrol.leverage）
+  if (patrol?.leverage) {
+    html += `<div class="block"><div class="block-label orange">今日杠杆点</div><div class="text">${toParas(clean(patrol.leverage))}</div></div>`;
+  }
+
+  // 多源洞察速览（from pain.overview）
+  if (pain?.overview) {
+    const ov = pain.overview;
+    html += `<div class="block"><div class="block-label blue">多源洞察速览</div>`;
+    if (ov.insights) html += `<div style="margin-bottom:8px">${toList(ov.insights)}</div>`;
+    if (ov.cases) html += `<div style="margin-bottom:4px"><div class="block-label red" style="margin-bottom:4px;font-size:10px">案例</div>${toList(ov.cases)}</div>`;
+    if (ov.opps) html += `<div><div class="block-label orange" style="margin-bottom:4px;font-size:10px">机会</div>${toList(ov.opps)}</div>`;
+    html += `</div>`;
+  } else if (!patrol?.headline && !patrol?.leverage) {
+    html += `<div class="block"><span class="empty">数据加载中，请稍候。</span></div>`;
+  }
+
+  html += '</div>';
+  return html;
 }
 
 function renderDigest(d, fullText) {
@@ -311,11 +342,12 @@ async function load() {
     document.getElementById('hdr-date').textContent = d.date || '';
     document.title = `每日简报 · ${d.date || ''}`;
     app.innerHTML = `
-      <div id="panel-digest" class="tab-panel active">${renderDigest(d.digest, d.digest?.full_raw || d.digest?.full)}</div>
+      <div id="panel-must" class="tab-panel active">${renderMust(d.patrol, d.pain)}</div>
+      <div id="panel-evolution" class="tab-panel">${renderEvolution(d.evolution)}</div>
+      <div id="panel-digest" class="tab-panel">${renderDigest(d.digest, d.digest?.full_raw || d.digest?.full)}</div>
       <div id="panel-patrol" class="tab-panel">${renderPatrol(d.patrol)}</div>
       <div id="panel-pain" class="tab-panel">${renderPain(d.pain)}</div>
       <div id="panel-learn" class="tab-panel">${renderLearn(d.learn)}</div>
-      <div id="panel-evolution" class="tab-panel">${renderEvolution(d.evolution)}</div>
     `;
     switchTab(currentTab);
   } catch(e) {
